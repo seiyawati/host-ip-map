@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Host/IP Map</h1>
+    <form action="/" method="post">
+      <input type="text" name="host" value="<%= params['host'] %>" placeholder="www.example.com or 127.0.0.1">
+      <input type="submit">
+    </form>
+
+    <% if @geo %>
+      <table>
+        <tr>
+          <td>IP</td>
+          <td><%= @ip %></td>
+        </tr>
+        <tr>
+          <td>Country</td>
+          <td><%= @geo.country.name %></td>
+        </tr>
+        <tr>
+          <td>Subdivisions</td>
+          <td><%= @geo.subdivisions.most_specific.name %></td>
+        </tr>
+        <tr>
+          <td>City</td>
+          <td><%= @geo.city.name %></td>
+        </tr>
+      </table>
+      <iframe src="https://www.google.com/maps/embed/v1/view?key=<%= @GOOGLE_API_KEY %>&center=<%= @geo.location.latitude %>,<%= @geo.location.longitude %>&zoom=10" 
+              width="600"
+              height="300"
+              allowfullscreen="allowfullscreen">
+      </iframe>
+      <div>
+      （This Product includes GeoLite2 data created by MaxMind, available from <a href=""></a>） 
+      </div>
+    <% end %>
+  </div>
+</body>
+</html>
